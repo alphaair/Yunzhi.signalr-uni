@@ -1,0 +1,66 @@
+{
+  "name": "yunzhi.signalr-uni",
+  "version": "9.0.6",
+  "description": "ASP.Net Core Signalr的uni版本客户端",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "typings": "./dist/esm/index.d.ts",
+  "umd": "./dist/browser/signalr.js",
+  "umd_name": "signalR",
+  "unpkg": "./dist/browser/signalr.js",
+  "directories": {
+    "test": "spec"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "prebuild": "rimraf ./src/pkg-version.ts && node -e \"const fs = require('fs'); const packageJson = require('./package.json'); fs.writeFileSync('./src/pkg-version.ts', 'export const VERSION = \\'' + packageJson.version + '\\';');\"",
+    "build": "npm run build:esm && npm run build:cjs && npm run build:browser && npm run build:webworker",
+    "build:esm": "tsc --project ./tsconfig.json --module es2015 --outDir ./dist/esm -d",
+    "build:cjs": "tsc --project ./tsconfig.json --module commonjs --outDir ./dist/cjs",
+    "build:browser": "webpack-cli",
+    "build:webworker": "webpack-cli --env platform=webworker",
+    "get-version": "node -e \"const { name, version } = require('./package.json'); console.log(`${name};${version}`);\""
+  },
+  "keywords": [
+    "aspnetcore",
+    "signalr",
+    "clinet",
+    "uni-app"
+  ],
+  "author": "yunzhi,yztob,alphaair",
+  "license": "ISC",
+  "files": [
+    "dist/**/*",
+    "src/**/*"
+  ],
+  "dependencies": {
+    "abort-controller": "^3.0.0",
+    "eventsource": "^2.0.2",
+    "fetch-cookie": "^2.0.3",
+    "node-fetch": "^2.6.7",
+    "ws": "^7.5.10"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.31",
+    "@dcloudio/types": "^3.4.26",
+    "@types/wechat-miniprogram": "^3.4.8",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "eslint": "^8.16.0",
+    "eslint-plugin-jsdoc": "^44.2.3",
+    "inspectpack": "^4.6.1",
+    "jest": "^29.5.0",
+    "jest-junit": "^13.0.0",
+    "jest-jasmine2": "^29.5.0",
+    "rimraf": "^3.0.2",
+    "terser": "^5.14.2",
+    "terser-webpack-plugin": "^5.3.1",
+    "ts-jest": "^29.0.5",
+    "ts-loader": "^8.0.17",
+    "typescript": "^4.9.5",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
